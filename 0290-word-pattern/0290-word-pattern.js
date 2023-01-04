@@ -4,15 +4,27 @@
  * @return {boolean}
  */
 var wordPattern = function(pattern, str) {
-    var a = pattern.split(''), b = str.split(' '), pt = [], x={};
-    if(a.length !== b.length)return false;
-    for(var i=0;i<a.length;i++){
-        if(!x[a[i]]){
-            x[a[i]] = b[i];
-            if(pt.indexOf(b[i])!== -1)return false;
-            pt.push(b[i]);
-        }
-        else if(x[a[i]]!==b[i])return false;
+    str = str.split(' ');
+    
+    if ( str.length != pattern.length) {
+        return false;
     }
-    return true
+    
+    var hash = {};
+    
+    for (var i = 0; i < str.length; i++) {
+        if (hash[pattern[i]]) {
+            if (hash[pattern[i]] !== str[i]) {
+                return false;
+           } 
+        } else {
+            if (Object.values(hash).indexOf(str[i]) !== -1){
+                return false;
+            } else {
+                 hash[pattern[i]] = str[i];
+            }
+        }
+    }
+    
+    return true;
 };
